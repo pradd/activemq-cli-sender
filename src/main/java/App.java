@@ -35,6 +35,10 @@ public class App
             break;
         default:
             System.err.println("Unexpected number of parameters: " + args.length);
+            for (int i = 0; i < args.length; i++)
+            {
+                System.err.println(i + ": " + args[i]);
+            }
             System.err.println("Usage:   activemq-cli-sender <url> [user pass] <queue> <message>");
             System.err
                     .println("Example: activemq-cli-sender tcp://localhost:61616 admin pa55w0rd JMS/QUEUE.NAME \"message text\"");
@@ -44,5 +48,7 @@ public class App
         Producer producer = new Producer(factory, queue);
         producer.send(message);
         producer.close();
+
+        System.out.println("Exiting.");
     }
 }
