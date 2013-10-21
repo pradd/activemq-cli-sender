@@ -5,34 +5,31 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
- 
+
 public class Producer
 {
-    private ConnectionFactory factory;
     private Connection connection;
     private Session session;
-    private MessageProducer producer;
- 
+    private MessageProducer messageProducer;
+
     public Producer(ConnectionFactory factory, String queueName) throws JMSException
     {
-        this.factory = factory;
+        System.out.println("Queue name is [" + queueName + "]");
+
         connection = factory.createConnection();
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         Destination destination = session.createQueue(queueName);
-        producer = session.createProducer(destination);
+        messageProducer = session.createProducer(destination);
     }
- 
-    public void run() throws JMSException
+
+    public void send(String text) throws JMSException
     {
-        for (int i = 0; i < 100; i++)
-        {
-            System.out.println("Creating Message " + i);
-            Message message = session.createTextMessage("Hello World!");
-            producer.send(message);
-        }
+        System.out.println("Sending message:\n" + text);
+        Message message = session.createTextMessage(text);
+        messageProducer.send(message);
     }
- 
+
     public void close() throws JMSException
     {
         if (connection != null)
@@ -40,5 +37,5 @@ public class Producer
             connection.close();
         }
     }
- 
+
 }
