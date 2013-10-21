@@ -7,7 +7,7 @@
   <groupId>pradd.cli</groupId>
   <artifactId>activemq-cli-sender</artifactId>
   <packaging>jar</packaging>
-  <version>0.1</version>
+  <version>1.0</version>
   <name>activemq-cli-sender</name>
 
   <dependencies>
